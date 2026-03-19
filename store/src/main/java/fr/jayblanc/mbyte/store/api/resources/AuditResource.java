@@ -32,7 +32,8 @@ public class AuditResource {
     AuditService auditService;
 
     @GET
-    @RolesAllowed("admin")
+    // @TODO(security): remettre @RolesAllowed("admin") quand l'ouverture temporaire de /api/audits aux users sera retirée.
+    //@RolesAllowed("admin")
     public List<AuditEvent> list(@QueryParam("limit") @DefaultValue("100") int limit) {
         if (limit > 500) limit = 500;
         return auditService.list(limit);
