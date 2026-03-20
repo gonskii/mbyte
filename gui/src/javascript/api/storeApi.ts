@@ -21,6 +21,7 @@ import Node from './entities/Node'
 import Neighbour from './entities/Neighbour'
 import Status from './entities/Status'
 import SearchResult from './entities/SearchResult'
+import AuditEvent from './entities/AuditEvent'
 
 export type StoreLocator = {
   /** User login used to compute <login>.<storesDomain> */
@@ -229,6 +230,14 @@ export function createStoreApi(tokenProvider: TokenProvider, options: CreateStor
       const res = await fetchWithAuth(tokenProvider, `/api/search${q}`, { method: 'GET' }, baseUrl)
       const arr = (await readJsonOrThrow(res)) as any[]
       return (arr || []).map((d: any) => SearchResult.fromDto(d))
+    },
+
+    async listAudits(limit = 100): Promise<Array<AuditEvent>> {
+      if (!baseUrl) throw new Error('Store base URL is not configured')
+      const q = `?limit=${encodeURIComponent(String(limit))}`
+      const res = await fetchWithAuth(tokenProvider, `/api/audits${q}`, { method: 'GET' }, baseUrl)
+      const arr = (await readJsonOrThrow(res)) as any[]
+      return (arr || []).map((d: unknown) => AuditEvent.fromDto(d))
     },
   }
 }
