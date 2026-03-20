@@ -1,5 +1,5 @@
 import { CSidebar, CSidebarHeader, CSidebarNav } from '@coreui/react'
-import { DashboardIcon, SidebarBrand, SidebarNavItem, SidebarProfile, StoreIcon } from '../index'
+import { AuditIcon, DashboardIcon, SidebarBrand, SidebarNavItem, SidebarProfile, StoreIcon } from '../index'
 import { useManagerStatus } from '../../auth/useManagerStatus'
 import { useEffect } from 'react'
 
@@ -35,9 +35,15 @@ export function SideBar({ narrow }: SideBarProps) {
         </SidebarNavItem>
 
         {hasStore && (
-          <SidebarNavItem to="/s/0/" icon={<StoreIcon size={narrow ? 'lg' : undefined} />} compact={narrow}>
-            Store
-          </SidebarNavItem>
+          <>
+            <SidebarNavItem to="/s/0/" icon={<StoreIcon size={narrow ? 'lg' : undefined} />} compact={narrow}>
+              Store
+            </SidebarNavItem>
+
+            <SidebarNavItem to="/audits" icon={<AuditIcon size={narrow ? 'lg' : undefined} />} compact={narrow}>
+              Audit
+            </SidebarNavItem>
+          </>
         )}
       </CSidebarNav>
     </CSidebar>
